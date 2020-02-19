@@ -1,7 +1,8 @@
+#! /usr/local/bin/python3
 import requests
 
 WEATHER_API_URL = "http://api.openweathermap.org/data/2.5/weather"
-WEATHER_API_KEY = "73511d60d65c4b15be62c52a91039247" #obtain your API key from your account
+WEATHER_API_KEY = "73511d60d65c4b15be62c52a91039247" #obtain your API key from your account, this is from the website
 
 def getCityWeather(**kwargs):
     """Get weather for a city based on name or id.
@@ -16,6 +17,11 @@ def getCityWeather(**kwargs):
         payload['id']=kwargs.get('city_id')
     elif 'city_name' in kwargs:
         payload['q']=kwargs.get('city_name')
+    elif 'zip' in kwargs:
+        payload['zip']=kwargs.get('zip')
+    elif "lat" in kwargs and "lon" in kwargs:
+        payload['lat']=kwargs.get('lat')
+        payload['lon']=kwargs.get('lon')
     else:
         raise Exception("Invalid Arguments: Please enter the city_id or city_name") 
     r = requests.get(WEATHER_API_URL, params=payload)
